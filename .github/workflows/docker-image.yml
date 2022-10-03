@@ -1,0 +1,28 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag app_image
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile_mysql --tag mysql_image
+    - uses: actions/checkout@v3
+    - name: AWS configure
+      run: aws configure set aws_access_key_id ASIAVUPO34O74B7HSQML && aws configure set aws_secret_access_key l4QIrc5X+zBf+6ttBVci0/rVRzYBv1MULtdbj+Qw && aws configure set aws_session_token FwoGZXIvYXdzEPT//////////wEaDOl3W1TxVcH0AnSUKiLLAXYxSIdnh99TbWa3/h9FFc5IjoYAsLzW0fOh/XiIyKtQZLssrUv/UyHb31ZoETvjCnx7sPPxIhlFMBU1nro8bJtwpkCk3qDnpqdZIn1Ql3QH8hLreZDSqrukRZpXlZlMHGxOhNrvItjgHbzqq11AG5FAYpU+tnmoEGR7zrLmouBYuhLTVy/aL0gJ55Zu7LX+xeJlO1NPYGCqAOYaGC5bb08jtP2hNzgo8VRY0QPzRvdsMBpWRXX0wP5tj4OIav/idpbEn3Hw077gXXcQKPaK6ZkGMi1TNJW8Z82W5bTByd59KYxA2nb+0bI0IWf+RRjffcHvL2iN58a6XpcUuP1X1UU= && export AWS_DEFAULT_REGION=us-east-1
+    - uses: actions/checkout@v3
+    - name: Login to AWS
+      run: docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 387584877503.dkr.ecr.us-east-1.amazonaws.com
+    - name: Pushing a docker image
+      run: docker tag app_image 387584877503.dkr.ecr.us-east-1.amazonaws.com/assignment1:app_image && docker push 387584877503.dkr.ecr.us-east-1.amazonaws.com/assignment1:app_image
+    - name: Pushing a docker image
+      run: docker tag mysql_image 387584877503.dkr.ecr.us-east-1.amazonaws.com/assignment1:mysql_image && docker push 387584877503.dkr.ecr.us-east-1.amazonaws.com/assignment1:mysql_image
