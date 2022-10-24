@@ -23,6 +23,6 @@ jobs:
     - name: Login to AWS
       run: docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 387584877503.dkr.ecr.us-east-1.amazonaws.com
     - name: Pushing a docker image
-      run: docker tag v0.1 387584877503.dkr.ecr.us-east-1.amazonaws.com/assignment1:v0.1 && docker push 387584877503.dkr.ecr.us-east-1.amazonaws.com/web-app:v0.1
+      run: docker tag v0.1 387584877503.dkr.ecr.us-east-1.amazonaws.com/web-app:v0.1 && docker push 387584877503.dkr.ecr.us-east-1.amazonaws.com/web-app:v0.1
     - name: Pushing a docker image
-      run: docker tag v0.1 387584877503.dkr.ecr.us-east-1.amazonaws.com/assignment1:v0.1 && docker push 387584877503.dkr.ecr.us-east-1.amazonaws.com/my-sql:v0.1
+      run: docker tag v0.1 387584877503.dkr.ecr.us-east-1.amazonaws.com/my-sql:v0.1 && docker push 387584877503.dkr.ecr.us-east-1.amazonaws.com/my-sql:v0.1
