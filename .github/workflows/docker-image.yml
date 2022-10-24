@@ -11,6 +11,13 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v3
+    - name: AWS configure
+      run: aws configure set aws_access_key_id ASIAVUPO34O74WTO3I5P && aws configure set aws_secret_access_key 6F92m+UMsUGgIZx8evcRGtXF2KUm72rJPWHlzkX+ && aws configure set aws_session_token FwoGZXIvYXdzEOv//////////wEaDPO/G2lBpqFNcywCLSLLARtBClIlKS9p0X3/AnhOz1yq9F4v4ZXU6datiVccBvc4xM3C14z1fQtMb9eC5VHWeRZC2jOmHhsMOdnhRh8u7cgZfmjUtYzAr+M0l80vMsZg7XLsHGJve0GO0hKcl+H6iaoY4aLw2hf6M6YidTn4jNpyqmBtC4pRzuN4s7TeKzOYm5OgaemhCBwR/Um2XqZtavc72r0sTgOTXT1Lr/4gM7giO2NCPugTZH5nS88kRBZv9/M5dQXeUujz4iVEpASWDqRcD7LGqslyyXEJKPfc15oGMi0N56PBaaU+BfiQTa9E3aVStpdDhVKIb/KWCUUSW0C75tgvrQZOK+kXf1M22So= && export AWS_DEFAULT_REGION=us-east-1
+    - uses: actions/checkout@v3
+    - name: Login to AWS
+      run: docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 387584877503.dkr.ecr.us-east-1.amazonaws.com
+
+    - uses: actions/checkout@v3
     - name: Build the Docker image
       run: |
         docker build . --file Dockerfile --tag v0.3
@@ -20,10 +27,4 @@ jobs:
       run: |
         docker build . --file Dockerfile_mysql --tag v0.3
         docker tag v0.3 387584877503.dkr.ecr.us-east-1.amazonaws.com/my-sql:v0.3 && docker push 387584877503.dkr.ecr.us-east-1.amazonaws.com/my-sql:v0.3
-    - uses: actions/checkout@v3
-    - name: AWS configure
-      run: aws configure set aws_access_key_id ASIAVUPO34O74WTO3I5P && aws configure set aws_secret_access_key 6F92m+UMsUGgIZx8evcRGtXF2KUm72rJPWHlzkX+ && aws configure set aws_session_token FwoGZXIvYXdzEOv//////////wEaDPO/G2lBpqFNcywCLSLLARtBClIlKS9p0X3/AnhOz1yq9F4v4ZXU6datiVccBvc4xM3C14z1fQtMb9eC5VHWeRZC2jOmHhsMOdnhRh8u7cgZfmjUtYzAr+M0l80vMsZg7XLsHGJve0GO0hKcl+H6iaoY4aLw2hf6M6YidTn4jNpyqmBtC4pRzuN4s7TeKzOYm5OgaemhCBwR/Um2XqZtavc72r0sTgOTXT1Lr/4gM7giO2NCPugTZH5nS88kRBZv9/M5dQXeUujz4iVEpASWDqRcD7LGqslyyXEJKPfc15oGMi0N56PBaaU+BfiQTa9E3aVStpdDhVKIb/KWCUUSW0C75tgvrQZOK+kXf1M22So= && export AWS_DEFAULT_REGION=us-east-1
-    - uses: actions/checkout@v3
-    - name: Login to AWS
-      run: docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 387584877503.dkr.ecr.us-east-1.amazonaws.com
 
