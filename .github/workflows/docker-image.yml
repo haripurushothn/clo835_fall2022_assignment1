@@ -26,10 +26,10 @@ jobs:
     - name: Build the Docker image
       run: |
         docker build . --file Dockerfile --tag v0.4
-        docker tag v0.4 387584877503.dkr.ecr.us-east-1.amazonaws.com/web-app:v0.4 && docker push 387584877503.dkr.ecr.us-east-1.amazonaws.com/web-app:v0.4
+        docker tag web-app:latest 514977857271.dkr.ecr.us-east-1.amazonaws.com/web-app:latest && docker push 514977857271.dkr.ecr.us-east-1.amazonaws.com/web-app:latest
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: |
         docker build . --file Dockerfile_mysql --tag v0.3
-        docker tag v0.3 387584877503.dkr.ecr.us-east-1.amazonaws.com/my-sql:v0.3 && docker push 387584877503.dkr.ecr.us-east-1.amazonaws.com/my-sql:v0.3
+        docker tag my-sql:latest 514977857271.dkr.ecr.us-east-1.amazonaws.com/my-sql:latest && docker push 514977857271.dkr.ecr.us-east-1.amazonaws.com/my-sql:latest
 
